@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 // Animated 3D Cubes component
 const AnimatedCubes = () => {
@@ -185,40 +185,44 @@ const BlockchainVisualization = () => {
   );
 };
 
-// Speaker card component
-const SpeakerCard = ({ name, title, org, delay }) => (
-  <div
-    className="group relative bg-slate-900/60 backdrop-blur border border-slate-700 p-6 hover:border-rose-500/50 transition-all duration-500 hover:-translate-y-2"
-    style={{ animation: `fadeSlideUp 0.6s ease-out forwards`, animationDelay: `${delay}ms`, opacity: 0 }}
-  >
-    <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-rose-500/20 to-slate-800 border border-rose-500/30 flex items-center justify-center">
-      <span className="text-2xl text-rose-400 font-bold">{name.split(' ').map(n => n[0]).join('')}</span>
-    </div>
-    <h3 className="text-white font-semibold text-center text-lg">{name}</h3>
-    <p className="text-rose-400/80 text-sm text-center mt-1">{title}</p>
-    <p className="text-slate-400 text-xs text-center mt-1">{org}</p>
-    <div className="absolute inset-0 border-2 border-rose-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-  </div>
-);
-
-// Agenda item component
-const AgendaItem = ({ time, title, speaker, type, delay }) => (
-  <div
-    className="flex gap-4 md:gap-6 group"
-    style={{ animation: `fadeSlideUp 0.6s ease-out forwards`, animationDelay: `${delay}ms`, opacity: 0 }}
-  >
-    <div className="w-24 md:w-32 shrink-0 text-right">
-      <span className="text-rose-400 font-mono text-sm md:text-base">{time}</span>
-    </div>
-    <div className="relative pb-8 border-l border-slate-700 pl-6 group-hover:border-rose-500/50 transition-colors">
-      <div className="absolute left-0 top-1 w-3 h-3 -translate-x-1/2 bg-slate-900 border-2 border-rose-500/50 group-hover:border-rose-400 group-hover:bg-rose-500/20 transition-all" />
-      <div className="inline-block px-2 py-0.5 text-xs uppercase tracking-wider mb-2 border border-slate-600 text-slate-400">
-        {type}
-      </div>
-      <h4 className="text-white font-medium text-base md:text-lg group-hover:text-rose-400 transition-colors">{title}</h4>
-      {speaker && <p className="text-slate-400 text-sm mt-1">{speaker}</p>}
-    </div>
-  </div>
+// HUBC Logo SVG Component
+const HUBCLogo = ({ className = "w-12 h-12" }) => (
+  <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path 
+      d="M20 70 L20 30 L50 12 L80 30 L80 50" 
+      stroke="#a51c30" 
+      strokeWidth="8" 
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill="none"
+    />
+    <path 
+      d="M35 60 L35 45 L50 36 L65 45 L65 52" 
+      stroke="#a51c30" 
+      strokeWidth="5" 
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill="none"
+    />
+    <path 
+      d="M80 30 L92 24" 
+      stroke="#9ca3af" 
+      strokeWidth="3" 
+      strokeLinecap="round"
+    />
+    <path 
+      d="M65 45 L77 39" 
+      stroke="#9ca3af" 
+      strokeWidth="2" 
+      strokeLinecap="round"
+    />
+    <path 
+      d="M80 50 L88 58" 
+      stroke="#a51c30" 
+      strokeWidth="4" 
+      strokeLinecap="round"
+    />
+  </svg>
 );
 
 // Main App component
@@ -248,34 +252,6 @@ export default function App() {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     setMenuOpen(false);
   };
-
-  const speakers = [
-    { name: 'Dr. Sarah Chen', title: 'AI Research Director', org: 'MIT Media Lab' },
-    { name: 'Marcus Williams', title: 'Blockchain Architect', org: 'Ethereum Foundation' },
-    { name: 'Prof. James Morton', title: 'Fintech Professor', org: 'Harvard Law School' },
-    { name: 'Elena Rodriguez', title: 'CEO', org: 'Web3 Ventures' },
-    { name: 'Dr. David Park', title: 'Chief Scientist', org: 'OpenAI' },
-    { name: 'Amanda Foster', title: 'Policy Director', org: 'Digital Currency Initiative' },
-  ];
-
-  const day1Agenda = [
-    { time: '8:00 AM', title: 'Registration & Networking Breakfast', type: 'Networking' },
-    { time: '9:00 AM', title: 'Opening Keynote: The Convergence of AI and Blockchain', speaker: 'Dr. Sarah Chen', type: 'Keynote' },
-    { time: '10:30 AM', title: 'Panel: Smart Contracts Meet Machine Learning', speaker: 'Multiple Speakers', type: 'Panel' },
-    { time: '12:00 PM', title: 'Networking Lunch', type: 'Break' },
-    { time: '1:30 PM', title: 'Workshop: Building AI-Powered dApps', speaker: 'Marcus Williams', type: 'Workshop' },
-    { time: '3:30 PM', title: 'Fireside Chat: Regulatory Landscape', speaker: 'Prof. James Morton', type: 'Fireside' },
-    { time: '5:00 PM', title: 'Day 1 Reception', type: 'Networking' },
-  ];
-
-  const day2Agenda = [
-    { time: '9:00 AM', title: 'Keynote: Web3 and the Future of Finance', speaker: 'Elena Rodriguez', type: 'Keynote' },
-    { time: '10:30 AM', title: 'Technical Deep Dive: Zero-Knowledge Proofs', speaker: 'Dr. David Park', type: 'Technical' },
-    { time: '12:00 PM', title: 'Lunch & Demos', type: 'Break' },
-    { time: '1:30 PM', title: 'Panel: AI Ethics in Decentralized Systems', speaker: 'Multiple Speakers', type: 'Panel' },
-    { time: '3:00 PM', title: 'Startup Pitch Competition Finals', type: 'Competition' },
-    { time: '4:30 PM', title: 'Closing Keynote & Awards', speaker: 'Amanda Foster', type: 'Keynote' },
-  ];
 
   return (
     <div className="min-h-screen bg-slate-950 text-white overflow-x-hidden">
@@ -407,7 +383,7 @@ export default function App() {
               </button>
             ))}
             <button className="px-5 py-2 bg-rose-500 text-white font-semibold text-sm uppercase tracking-wider hover:bg-rose-400 transition-colors">
-              Register
+              Save the Date
             </button>
           </div>
 
@@ -430,7 +406,7 @@ export default function App() {
               </button>
             ))}
             <button className="w-full px-5 py-3 bg-rose-500 text-white font-semibold text-sm uppercase tracking-wider">
-              Register
+              Save the Date
             </button>
           </div>
         </div>
@@ -459,30 +435,37 @@ export default function App() {
             Exploring the intersection of artificial intelligence and decentralized technologies at the world's premier academic institution.
           </p>
 
-          <div className="hero-date flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 mt-8">
-            <div className="flex items-center gap-2 text-slate-300">
-              <div className="w-2 h-2 bg-rose-500" />
-              <span className="text-sm uppercase tracking-wider">Harvard Law School</span>
-            </div>
-            <div className="hidden sm:block w-px h-4 bg-slate-700" />
-            <div className="flex items-center gap-2 text-slate-300">
-              <div className="w-2 h-2 bg-rose-500" />
-              <span className="text-sm uppercase tracking-wider">2 Days</span>
-            </div>
-            <div className="hidden sm:block w-px h-4 bg-slate-700" />
-            <div className="flex items-center gap-2 text-slate-300">
-              <div className="w-2 h-2 bg-rose-500" />
-              <span className="text-sm uppercase tracking-wider">500+ Attendees</span>
+          {/* Co-hosted by section - in hero */}
+          <div className="hero-date mt-8 flex flex-col items-center gap-4">
+            <p className="text-slate-500 text-xs uppercase tracking-[0.2em]">Co-hosted by</p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 border border-rose-500/50 flex items-center justify-center text-rose-400 text-xs font-bold">
+                  HLS
+                </div>
+                <div className="text-left">
+                  <p className="text-white text-sm font-medium">Harvard Law School</p>
+                  <p className="text-slate-400 text-xs">Fintech Initiative</p>
+                </div>
+              </div>
+              <div className="hidden sm:block w-px h-10 bg-slate-700" />
+              <div className="flex items-center gap-3">
+                <HUBCLogo className="w-10 h-10" />
+                <div className="text-left">
+                  <p className="text-white text-sm font-medium">Harvard Undergraduate</p>
+                  <p className="text-slate-400 text-xs">Blockchain Club</p>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="hero-cta flex flex-col sm:flex-row items-center justify-center gap-4 mt-12">
+          <div className="hero-cta flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
             <button className="group px-8 py-4 bg-rose-500 text-white font-bold uppercase tracking-wider hover:bg-rose-400 transition-all hover:scale-105">
-              Register Now
+              Save the Date
               <span className="inline-block ml-2 transition-transform group-hover:translate-x-1">→</span>
             </button>
-            <button className="px-8 py-4 border border-slate-600 text-white uppercase tracking-wider hover:border-rose-500 hover:text-rose-400 transition-colors">
-              View Schedule
+            <button onClick={() => scrollTo('about')} className="px-8 py-4 border border-slate-600 text-white uppercase tracking-wider hover:border-rose-500 hover:text-rose-400 transition-colors">
+              Learn More
             </button>
           </div>
 
@@ -517,12 +500,12 @@ export default function App() {
 
               <div className="mt-8 grid grid-cols-2 gap-6">
                 <div className="border border-slate-800 p-4 hover:border-rose-500/30 transition-colors">
-                  <p className="text-3xl font-bold gradient-text">30+</p>
-                  <p className="text-slate-400 text-sm uppercase tracking-wider mt-1">Speakers</p>
+                  <p className="text-3xl font-bold gradient-text">2</p>
+                  <p className="text-slate-400 text-sm uppercase tracking-wider mt-1">Days</p>
                 </div>
                 <div className="border border-slate-800 p-4 hover:border-rose-500/30 transition-colors">
-                  <p className="text-3xl font-bold gradient-text">15+</p>
-                  <p className="text-slate-400 text-sm uppercase tracking-wider mt-1">Sessions</p>
+                  <p className="text-3xl font-bold gradient-text">500+</p>
+                  <p className="text-slate-400 text-sm uppercase tracking-wider mt-1">Expected Attendees</p>
                 </div>
               </div>
             </div>
@@ -539,16 +522,18 @@ export default function App() {
                       <h3 className="text-white font-semibold text-lg">Harvard Law School</h3>
                       <p className="text-slate-400 text-sm">Fintech Initiative</p>
                     </div>
-                    <div className="border-l-2 border-rose-500 pl-4">
-                      <h3 className="text-white font-semibold text-lg">Harvard Undergraduate</h3>
-                      <p className="text-slate-400 text-sm">Blockchain Club</p>
+                    <div className="border-l-2 border-rose-500 pl-4 flex items-start gap-3">
+                      <div>
+                        <h3 className="text-white font-semibold text-lg">Harvard Undergraduate</h3>
+                        <p className="text-slate-400 text-sm">Blockchain Club</p>
+                      </div>
                     </div>
                   </div>
 
                   <div className="mt-8 pt-8 border-t border-slate-800">
                     <p className="text-slate-500 text-xs uppercase tracking-wider mb-2">Location</p>
-                    <p className="text-white">Allston Hall</p>
-                    <p className="text-slate-400 text-sm">Harvard University Campus</p>
+                    <p className="text-white">Austin Hall</p>
+                    <p className="text-slate-400 text-sm">Harvard Law School</p>
                   </div>
                 </div>
 
@@ -561,7 +546,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Speakers Section */}
+      {/* Speakers Section - Coming Soon */}
       <section id="speakers" className="relative py-24 px-6 bg-slate-900/30">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
@@ -571,21 +556,24 @@ export default function App() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {speakers.map((speaker, i) => (
-              <SpeakerCard key={speaker.name} {...speaker} delay={i * 100} />
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <button className="px-8 py-3 border border-slate-600 text-slate-300 uppercase tracking-wider text-sm hover:border-rose-500 hover:text-rose-400 transition-colors">
-              View All Speakers →
-            </button>
+          {/* Coming Soon State */}
+          <div className="flex flex-col items-center justify-center py-16">
+            <div className="grid grid-cols-3 gap-4 mb-8 opacity-20">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="w-24 h-24 md:w-32 md:h-32 border border-slate-700 bg-slate-800/50" />
+              ))}
+            </div>
+            <div className="text-center">
+              <p className="text-2xl md:text-3xl font-bold text-white mb-3">Coming Soon</p>
+              <p className="text-slate-400 max-w-md mx-auto">
+                We're assembling an exceptional lineup of speakers from the worlds of AI, blockchain, and fintech. Stay tuned for announcements.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Agenda Section */}
+      {/* Agenda Section - Coming Soon */}
       <section id="agenda" className="relative py-24 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
@@ -595,33 +583,33 @@ export default function App() {
             </h2>
           </div>
 
-          {/* Day 1 */}
-          <div className="mb-16">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="px-4 py-2 bg-rose-500 text-white font-bold uppercase tracking-wider text-sm">
-                Day 1
-              </div>
-              <span className="text-white font-medium">April 17, 2026</span>
-            </div>
-            <div className="space-y-0">
-              {day1Agenda.map((item, i) => (
-                <AgendaItem key={item.title} {...item} delay={i * 50} />
+          {/* Coming Soon State */}
+          <div className="flex flex-col items-center justify-center py-12">
+            <div className="w-full max-w-lg space-y-4 mb-8 opacity-20">
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="flex gap-4">
+                  <div className="w-20 h-4 bg-slate-700 rounded" />
+                  <div className="flex-1 h-16 border border-slate-700 bg-slate-800/50 rounded" />
+                </div>
               ))}
             </div>
-          </div>
-
-          {/* Day 2 */}
-          <div>
-            <div className="flex items-center gap-4 mb-8">
-              <div className="px-4 py-2 bg-rose-500 text-white font-bold uppercase tracking-wider text-sm">
-                Day 2
-              </div>
-              <span className="text-white font-medium">April 18, 2026</span>
+            <div className="text-center">
+              <p className="text-2xl md:text-3xl font-bold text-white mb-3">To Be Announced</p>
+              <p className="text-slate-400 max-w-md mx-auto">
+                Our full agenda is being finalized. Check back soon for keynotes, panels, workshops, and networking sessions.
+              </p>
             </div>
-            <div className="space-y-0">
-              {day2Agenda.map((item, i) => (
-                <AgendaItem key={item.title} {...item} delay={i * 50} />
-              ))}
+            
+            {/* Dates Preview */}
+            <div className="flex flex-col sm:flex-row gap-4 mt-10">
+              <div className="px-8 py-5 border border-slate-700 bg-slate-900/50 text-center">
+                <p className="text-rose-400 font-bold text-lg">Day 1</p>
+                <p className="text-white">April 17, 2026</p>
+              </div>
+              <div className="px-8 py-5 border border-slate-700 bg-slate-900/50 text-center">
+                <p className="text-rose-400 font-bold text-lg">Day 2</p>
+                <p className="text-white">April 18, 2026</p>
+              </div>
             </div>
           </div>
         </div>
@@ -634,15 +622,15 @@ export default function App() {
             Be Part of the <span className="gradient-text">Future</span>
           </h2>
           <p className="text-slate-400 text-lg mb-8 max-w-2xl mx-auto">
-            Join 500+ researchers, entrepreneurs, and innovators at Harvard for two days of groundbreaking discussions on AI and blockchain technology.
+            Join researchers, entrepreneurs, and innovators at Harvard for two days of groundbreaking discussions on AI and blockchain technology.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button className="group px-10 py-4 bg-rose-500 text-white font-bold uppercase tracking-wider hover:bg-rose-400 transition-all">
-              Register Now — Early Bird
+              Save the Date
               <span className="inline-block ml-2 transition-transform group-hover:translate-x-1">→</span>
             </button>
           </div>
-          <p className="text-slate-500 text-sm mt-4">Early bird pricing available until March 1, 2026</p>
+          <p className="text-slate-500 text-sm mt-4">April 17–18, 2026 • Austin Hall, Harvard Law School</p>
         </div>
       </section>
 
@@ -666,7 +654,13 @@ export default function App() {
             </div>
           </div>
           <div className="mt-8 pt-8 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4 text-slate-500 text-sm">
-            <p>Co-hosted by Harvard Law School Fintech Initiative & Harvard Undergraduate Blockchain Club</p>
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
+              <span>Co-hosted by Harvard Law School Fintech Initiative &</span>
+              <div className="flex items-center gap-1">
+                <HUBCLogo className="w-5 h-5" />
+                <span>Harvard Undergraduate Blockchain Club</span>
+              </div>
+            </div>
             <p>© 2026 All Rights Reserved</p>
           </div>
         </div>
